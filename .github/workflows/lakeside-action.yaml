@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTORY: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY_ALIAS: lakesidemutual
+      REGISTRY_ALIAS: lakeside-mutual-2020
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
