@@ -73,6 +73,8 @@ jobs:
   login_to_aws_ecr_public:
     name: Login to DockerHub
     runs-on: ubuntu-latest
+    env:
+      REGISTORY: ${{ secrets.DOCKERHUB_USERNAME }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -91,4 +93,5 @@ jobs:
       - name: Build Docker Compose
         working-directory: ./lakesidemutual/kubernetes
         run: |
+          export REGISTRY=$REGISTRY
           docker-compose -f docker-compose.yaml build
