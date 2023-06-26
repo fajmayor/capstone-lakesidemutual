@@ -86,5 +86,6 @@ jobs:
           version: 1.0.23
   
       - name: Build Docker Compose
+        working-directory: lakesidemutual/kubernetes
         run: |
           docker-compose -f docker-compose.yaml build
