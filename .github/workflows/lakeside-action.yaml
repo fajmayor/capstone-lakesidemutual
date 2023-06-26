@@ -97,4 +97,4 @@ jobs:
           export REGISTRY=$REGISTRY
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
           docker-compose -f docker-compose.yml build
-          docker images --format '{{.Repository}}' | grep $REGISTRY_ALIAS | cut -f1 -d' ' | xargs -I {} docker push
+          docker images | grep $REGISTRY_ALIAS | cut -f1 -d' ' | xargs -L 1 docker tag $REGISTRY_ALIAS:{} $REGISTRY/$REGISTRY_ALIAS:{}
