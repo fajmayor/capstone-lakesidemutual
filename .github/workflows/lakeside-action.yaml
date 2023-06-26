@@ -75,6 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTORY: ${{ secrets.DOCKERHUB_USERNAME }}
+      REGISTRY_ALIAS: lakesidemutual
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -94,4 +95,5 @@ jobs:
         working-directory: ./lakesidemutual/kubernetes
         run: |
           export REGISTRY=$REGISTRY
+          export REGISTRY_ALIAS=$REGISTRY_ALIAS
           docker-compose -f docker-compose.yml build
