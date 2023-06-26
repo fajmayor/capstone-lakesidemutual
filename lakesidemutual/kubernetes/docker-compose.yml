@@ -3,7 +3,7 @@ version: "3"
 services:
   customer-core:
     build: ../customer-core
-    image: $REGISTRY/$REGISTRY_ALIAS:customercore
+    image: $REGISTRY_ALIAS:customercore
   customer-management-backend:
     build: ../customer-management-backend
     image: $REGISTRY/$REGISTRY_ALIAS:customer-management-backend
