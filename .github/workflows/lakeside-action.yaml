@@ -61,10 +61,20 @@ jobs:
       # - name: Get Kubeconfig
       #   working-directory: ./terraform-eks-provision
       #   run: terraform output kubeconfig > kubeconfig.yaml
+  
+      - name: Get outputs
+        uses: dflook/terraform-output@v1
+        id: tf-outputs
+        with:
+          path: ./terraform-eks-provision
+
+      - name: Get EKS-Cluster-Name
+        run: |
+          echo "The EKS-Cluster-Name is ${{ fromJson(steps.tf-outputs.outputs.cluster_name).name }}"
 
       - name: Set kubeconfig
         run: |
-          aws eks update-kubeconfig --name lakesidemutual
+          aws eks update-kubeconfig --name ${{ fromJson(steps.tf-outputs.outputs.cluster_name).name }}
 
       - name: Verify EKS cluster
         run: kubectl get nodes
