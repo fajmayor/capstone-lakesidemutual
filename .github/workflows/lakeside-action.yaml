@@ -70,7 +70,7 @@ jobs:
 
       - name: Get EKS-Cluster-Name
         run: |
-          echo "The EKS-Cluster-Name is ${{ fromJson(steps.tf-outputs.outputs.cluster_name).name }}"
+          echo "The EKS-Cluster-Name is ${{ fromJson(steps.tf-outputs.outputs.cluster_name).id }}"
 
       - name: Set kubeconfig
         run: |
