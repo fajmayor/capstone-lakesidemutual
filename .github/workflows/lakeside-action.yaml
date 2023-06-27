@@ -97,18 +97,4 @@ jobs:
           export REGISTRY=$REGISTRY
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
           docker-compose -f docker-compose.yml build
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-            images: |
-              docker.io/fajmayor
-
-      - name: Build and push Docker images
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          docker images | grep docker.io | cut -f1 -d' ' | xargs -L 1 docker push fajmayor/{}
