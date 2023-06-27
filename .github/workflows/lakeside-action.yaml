@@ -96,4 +96,5 @@ jobs:
         run: |
           export REGISTRY=$REGISTRY
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
-          docker-compose -f docker-compose.yml push
+          docker-compose -f docker-compose.yml build
+          docker images | grep gcr.io | cut -f1 -d' ' | xargs -L 1 docker-compose push
