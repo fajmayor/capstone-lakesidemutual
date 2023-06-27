@@ -52,9 +52,9 @@ jobs:
         working-directory: ./terraform-eks-provision
         run: terraform ${{ env.TERRAFORM_ACTION }} -auto-approve
 
-      - name: Get Kubeconfig
-        working-directory: ./terraform-eks-provision
-        run: terraform output kubeconfig > kubeconfig.yaml
+      # - name: Get Kubeconfig
+      #   working-directory: ./terraform-eks-provision
+      #   run: terraform output kubeconfig > kubeconfig.yaml
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v2.0
