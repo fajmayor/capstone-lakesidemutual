@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: destroy
+    TERRAFORM_ACTION: apply
     GITHUB_USERNAME: fajmayor
     REPOSITORY_NAME: capstone-lakeside
 
@@ -68,13 +68,9 @@ jobs:
         with:
           path: ./terraform-eks-provision
 
-      - name: Get EKS-Cluster-Name
-        run: |
-          echo "The EKS-Cluster-Name is ${{ fromJson(steps.tf-outputs.outputs.cluster_name).id }}"
-
       - name: Set kubeconfig
         run: |
-          aws eks update-kubeconfig --name ${{ fromJson(steps.tf-outputs.outputs.cluster_name).name }}
+          aws eks update-kubeconfig --name lakesidemutual-eks
 
       - name: Verify EKS cluster
         run: kubectl get nodes
