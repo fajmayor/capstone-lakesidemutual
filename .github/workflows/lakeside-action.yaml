@@ -74,6 +74,7 @@ jobs:
           aws eks --region us-east-2 update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }}
 
       - name: Verify EKS cluster
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         run: kubectl get nodes
 
   # login to DockerHub
