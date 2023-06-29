@@ -62,15 +62,15 @@ jobs:
       #   working-directory: ./terraform-eks-provision
       #   run: terraform output kubeconfig > kubeconfig.yaml
   
-      # - name: Get outputs
-      #   uses: dflook/terraform-output@v1
-      #   id: tf-outputs
-      #   with:
-      #     path: ./terraform-eks-provision
+      - name: Get outputs
+        uses: dflook/terraform-output@v1
+        id: tf-outputs
+        with:
+          path: ./terraform-eks-provision
 
       - name: Set kubeconfig
         run: |
-          aws eks --region us-east-2 update-kubeconfig --name lakesidemutual-eks
+          aws eks --region us-east-2 update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }}
 
       - name: Verify EKS cluster
         run: kubectl get nodes
