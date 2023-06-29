@@ -69,7 +69,7 @@ jobs:
           path: ./terraform-eks-provision
 
       - name: Set kubeconfig
-        if: steps.tf-outputs.outputs.cluster_name != '${{ steps.tf-outputs.outputs.cluster_name }}'
+        if: steps.tf-outputs.outputs.cluster_name == '${{ steps.tf-outputs.outputs.cluster_name }}'
         run: |
           aws eks --region us-east-2 update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }}
 
