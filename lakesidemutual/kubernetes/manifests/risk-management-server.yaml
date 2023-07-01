@@ -20,7 +20,7 @@ spec:
               value: policy-management-backend-queue
             - name: ACTIVEMQ_PORT
               value: "61613"
-          image: gcr.io/lakeside-mutual-2020/risk-management-server
+          image: $REGISTRY/$REGISTRY_ALIAS/risk-management-server
           imagePullPolicy: Always
           name: risk-management-server
           ports:
