@@ -108,28 +108,4 @@ jobs:
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
           docker-compose -f docker-compose.yml build
           docker images | grep docker.io | cut -f1 -d' ' | xargs -L 1 docker-compose push
-
-  Run Kubernetes Manifests in EKS:
-    name: Kubernetes manifests
-    runs-on: ubuntu-latest
-
-    
-    env:
-      REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY: docker.io
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: "Activate personal namespace"
-        uses: okteto/namespace@master
-        with:
-          name: lakesidemutual
-
-      - name: "Create deployment"
-        uses: okteto/apply@master
-        with:
-          manifest: ./lakesidemutual/kubernetes/manifests
-          REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}
-          REGISTRY: ${{ env.REGISTRY }}
+          
