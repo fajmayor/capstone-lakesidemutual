@@ -112,8 +112,8 @@ jobs:
   Run Kubernetes Manifests in EKS:
     name: Kubernetes manifests
     runs-on: ubuntu-latest
-    if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
 
+    
     env:
       REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
       REGISTRY: docker.io
