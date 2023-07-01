@@ -111,6 +111,7 @@ jobs:
 
   Run Kubernetes Manifests in EKS:
     name: Kubernetes manifests
+    needs: deploy_aws_infrastructures
     runs-on: ubuntu-latest
 
     env:
