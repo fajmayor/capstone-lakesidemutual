@@ -113,7 +113,6 @@ jobs:
     name: Kubernetes manifests
     needs: deploy_aws_infrastructures
     runs-on: ubuntu-latest
-    if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
     env:
       REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
       REGISTRY: docker.io
