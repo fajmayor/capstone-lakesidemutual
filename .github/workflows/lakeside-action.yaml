@@ -110,7 +110,7 @@ jobs:
           repository: "${{ github.event.repository.name }}"
           login: "${{ env.DOCKERHUB_USERNAME }}"
           password: "${{ env.DOCKERHUB_TOKEN }}"
-          tag: "latest"
+          tag: fajmayor/customer-core
   
       - name: Build Docker Compose
         working-directory: ./lakesidemutual/kubernetes
