@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: apply
+    TERRAFORM_ACTION: 
     GITHUB_USERNAME: fajmayor
     REPOSITORY_NAME: capstone-lakeside
 
@@ -84,7 +84,7 @@ jobs:
 
     env:
       REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY: docker.io
+      REGISTRY: registry.hub.docker.com
       
     steps:
       - name: Checkout repository
@@ -100,6 +100,17 @@ jobs:
         uses: withlogicco/setup-compose-cli@v1
         with:
           version: 1.0.23
+
+      - name: Check image
+        id: image_exists
+        uses: cloudposse/github-action-docker-image-exists@main
+        with:
+          registry: ${{ env.REGISTRY }}
+          organization: "${{ github.event.repository.owner.login }}"
+          repository: "${{ github.event.repository.name }}"
+          login: "${{ env.DOCKERHUB_USERNAME }}"
+          password: "${{ env.DOCKERHUB_TOKEN }}"
+          tag: latest
   
       - name: Build Docker Compose
         working-directory: ./lakesidemutual/kubernetes
