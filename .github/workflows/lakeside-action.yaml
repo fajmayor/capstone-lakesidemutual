@@ -114,7 +114,7 @@ jobs:
           tag: latest
   
       - name: Build Docker Compose
-        if: ${{ steps.image_exists.outputs.image != "fajmayor/customer-core" }}
+        if: ${{ steps.image_exists.outputs.image != fajmayor/customer-core }}
         working-directory: ./lakesidemutual/kubernetes
         run: |
           export REGISTRY=$REGISTRY
