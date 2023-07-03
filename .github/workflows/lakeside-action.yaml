@@ -107,10 +107,11 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           organization: "${{ github.event.repository.owner.login }}"
-          repository: "${{ github.event.repository.name }}"
+          #repository: "${{ github.event.repository.name }}"
+          repository: "${{ env.REGISTRY_ALIAS }}"
           login: "${{ env.DOCKERHUB_USERNAME }}"
           password: "${{ env.DOCKERHUB_TOKEN }}"
-          tag: fajmayor/customer-core
+          tag: latest
   
       - name: Build Docker Compose
         working-directory: ./lakesidemutual/kubernetes
