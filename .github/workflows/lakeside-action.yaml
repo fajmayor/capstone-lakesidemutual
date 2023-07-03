@@ -108,7 +108,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           organization: "${{ github.event.repository.owner.login }}"
           #repository: "${{ github.event.repository.name }}"
-          repository: "${{ env.REGISTRY_ALIAS }}"
+          repository: "customer-core"
           login: "${{ env.DOCKERHUB_USERNAME }}"
           password: "${{ env.DOCKERHUB_TOKEN }}"
           tag: latest
