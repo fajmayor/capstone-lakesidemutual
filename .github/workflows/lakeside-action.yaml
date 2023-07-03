@@ -114,6 +114,7 @@ jobs:
           tag: latest
   
       - name: Build Docker Compose
+        if: ${{ steps.image_exists.outputs.image == "" }}
         working-directory: ./lakesidemutual/kubernetes
         run: |
           export REGISTRY=$REGISTRY
