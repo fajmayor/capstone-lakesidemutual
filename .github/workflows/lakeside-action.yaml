@@ -135,10 +135,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: "Activate personal namespace"
-        uses: okteto/namespace@main
-        with:
-          name: lakesidemutual
+      # - name: "Activate personal namespace"
+      #   uses: okteto/namespace@main
+      #   with:
+      #     name: lakesidemutual
 
       - name: "Create deployment"
         uses: okteto/apply@main
