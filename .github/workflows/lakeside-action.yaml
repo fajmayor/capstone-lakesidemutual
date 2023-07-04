@@ -122,7 +122,7 @@ jobs:
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
           export IMAGE_TAG=$IMAGE_TAG
           docker-compose -f docker-compose.yml build
-          docker images | grep docker.io | cut -f1 -d' ' | xargs -L 1 docker-compose push
+          docker images | grep $REGISTRY | cut -f1 -d' ' | xargs -L 1 docker-compose push
 
   run_manifests:
     name: Kubernetes manifests
