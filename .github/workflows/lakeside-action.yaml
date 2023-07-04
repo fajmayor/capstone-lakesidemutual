@@ -157,6 +157,9 @@ jobs:
 
       - name: Run Manifest
         run: |
+          export REGISTRY=$REGISTRY
+          export REGISTRY_ALIAS=$REGISTRY_ALIAS
+          export IMAGE_TAG=$IMAGE_TAG
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/*.yaml
 
       # - name: "Create deployment"
