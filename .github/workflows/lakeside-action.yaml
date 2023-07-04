@@ -102,20 +102,20 @@ jobs:
         with:
           version: 1.0.23
 
-      # - name: Check image
-      #   id: image_exists
-      #   uses: cloudposse/github-action-docker-image-exists@main
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     organization: "${{ github.event.repository.owner.login }}"
-      #     #repository: "${{ github.event.repository.name }}"
-      #     repository: "customer-core"
-      #     login: "${{ env.DOCKERHUB_USERNAME }}"
-      #     password: "${{ env.DOCKERHUB_TOKEN }}"
-      #     tag: ${{ env.IMAGE_TAG }}
+      - name: Check image
+        id: image_exists
+        uses: cloudposse/github-action-docker-image-exists@main
+        with:
+          registry: ${{ env.REGISTRY }}
+          organization: "${{ github.event.repository.owner.login }}"
+          #repository: "${{ github.event.repository.name }}"
+          repository: "customer-core"
+          login: "${{ env.DOCKERHUB_USERNAME }}"
+          password: "${{ env.DOCKERHUB_TOKEN }}"
+          tag: ${{ env.IMAGE_TAG }}
   
       - name: Build Docker Compose
-        
+        if: ${{ steps.image_exists.outputs.image != '$REGISTRY/$REGISTRY_ALIAS/customer-core:$IMAGE_TAG' }}
         working-directory: ./lakesidemutual/kubernetes
         run: |
           export REGISTRY=$REGISTRY
