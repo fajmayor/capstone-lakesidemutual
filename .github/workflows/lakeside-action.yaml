@@ -89,7 +89,9 @@ jobs:
           export REGISTRY=$REGISTRY
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
           export IMAGE_TAG=$IMAGE_TAG
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/*.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-core.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-backend.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-frontend.yaml
 
   # login to DockerHub
   login_to_dockerHub:
