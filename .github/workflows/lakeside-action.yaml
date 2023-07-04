@@ -158,6 +158,6 @@ jobs:
       - name: "Create deployment"
         uses: okteto/apply@main
         with:
-          manifest: ./lakesidemutual/kubernetes/manifests
+          manifest: ./lakesidemutual/kubernetes/manifests/*.yaml
           REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}
           REGISTRY: ${{ env.REGISTRY }}

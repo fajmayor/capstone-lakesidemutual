@@ -20,7 +20,7 @@ spec:
               value: http://customer-core:8110
             - name: SPRING_BOOT_ADMIN_CLIENT_URL
               value: http://spring-boot-admin:9000
-          image: docker.io/fajmayor/policy-management-backend
+          image: $REGISTRY/$REGISTRY_ALIAS/policy-management-backend
           imagePullPolicy: Always
           name: policy-management-backend
           ports:
