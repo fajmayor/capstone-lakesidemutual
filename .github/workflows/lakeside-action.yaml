@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: destroy
+    TERRAFORM_ACTION: apply
     GITHUB_USERNAME: ${{ vars.MY_GITHUB_USERNAME }}
     REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
 
@@ -126,7 +126,10 @@ jobs:
 
   run_manifests:
     name: Kubernetes manifests
-    needs: deploy_aws_infrastructures
+    needs: 
+      - deploy_aws_infrastructures
+      - login_to_dockerHub
+
     runs-on: ubuntu-latest
     
     env:
