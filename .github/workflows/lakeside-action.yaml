@@ -84,7 +84,7 @@ jobs:
 
     env:
       REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY: registry.hub.docker.com
+      REGISTRY: docker.io
       IMAGE_TAG: ${{ github.sha }}
       
     steps:
