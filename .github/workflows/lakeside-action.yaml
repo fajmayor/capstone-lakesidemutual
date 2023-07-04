@@ -155,9 +155,13 @@ jobs:
         run: |
           aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
 
-      - name: "Create deployment"
-        uses: okteto/apply@main
-        with:
-          manifest: ./lakesidemutual/kubernetes/manifests/*.yaml
-          REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}
-          REGISTRY: ${{ env.REGISTRY }}
+      - name: Run Manifest
+        run: |
+          kubectl aply -f ./lakesidemutual/kubernetes/manifests/*.yaml
+
+      # - name: "Create deployment"
+      #   uses: okteto/apply@main
+      #   with:
+      #     manifest: ./lakesidemutual/kubernetes/manifests/*.yaml
+      #     REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}
+      #     REGISTRY: ${{ env.REGISTRY }}
