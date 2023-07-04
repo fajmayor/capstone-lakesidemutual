@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: destroy
+    TERRAFORM_ACTION: apply
     GITHUB_USERNAME: ${{ vars.MY_GITHUB_USERNAME }}
     REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
     REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -80,18 +80,6 @@ jobs:
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         run: kubectl get nodes
 
-      - name: Set kubeconfig
-        run: |
-          aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
-
-      - name: Run Manifest
-        run: |
-          export REGISTRY=$REGISTRY
-          export REGISTRY_ALIAS=$REGISTRY_ALIAS
-          export IMAGE_TAG=$IMAGE_TAG
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-core.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-backend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-frontend.yaml
 
   # login to DockerHub
   login_to_dockerHub:
@@ -140,47 +128,39 @@ jobs:
           docker-compose -f docker-compose.yml build
           docker images | grep $REGISTRY | cut -f1 -d' ' | xargs -L 1 docker-compose push
 
-  # run_manifests:
-  #   name: Kubernetes manifests
-  #   needs: 
-  #     - deploy_aws_infrastructures
-  #     - login_to_dockerHub
+  run_manifests:
+    name: Kubernetes manifests
+    needs: 
+      - deploy_aws_infrastructures
+      - login_to_dockerHub
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     
-  #   env:
-  #     REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
-  #     REGISTRY: registry.hub.docker.com
-
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
   #     # - name: "Activate personal namespace"
   #     #   uses: okteto/namespace@main
   #     #   with:
   #     #     name: lakesidemutual
 
-  #     - name: Get outputs
-  #       uses: dflook/terraform-output@v1
-  #       id: tf-outputs
-  #       with:
-  #         path: ./terraform-eks-provision
+      - name: Get outputs
+        uses: dflook/terraform-output@v1
+        id: tf-outputs
+        with:
+          path: ./terraform-eks-provision
 
-  #     - name: Set kubeconfig
-  #       run: |
-  #         aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
+      - name: Set kubeconfig
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        run: |
+          aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
 
-  #     - name: Run Manifest
-  #       run: |
-  #         export REGISTRY=$REGISTRY
-  #         export REGISTRY_ALIAS=$REGISTRY_ALIAS
-  #         export IMAGE_TAG=$IMAGE_TAG
-  #         kubectl apply -f ./lakesidemutual/kubernetes/manifests/*.yaml
-
-      # - name: "Create deployment"
-      #   uses: okteto/apply@main
-      #   with:
-      #     manifest: ./lakesidemutual/kubernetes/manifests/*.yaml
-      #     REGISTRY_ALIAS: ${{ env.REGISTRY_ALIAS }}
-      #     REGISTRY: ${{ env.REGISTRY }}
+      - name: Run Manifest
+        run: |
+          export REGISTRY=$REGISTRY
+          export REGISTRY_ALIAS=$REGISTRY_ALIAS
+          export IMAGE_TAG=$IMAGE_TAG
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-core.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-backend.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-frontend.yaml
