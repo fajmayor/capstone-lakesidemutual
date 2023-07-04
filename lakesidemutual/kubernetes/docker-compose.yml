@@ -3,28 +3,28 @@ version: "3"
 services:
   customer-core:
     build: ../customer-core
-    image: $REGISTRY/$REGISTRY_ALIAS/customer-core
+    image: $REGISTRY/$REGISTRY_ALIAS/customer-core:$IMAGE_TAG
   customer-management-backend:
     build: ../customer-management-backend
-    image: $REGISTRY/$REGISTRY_ALIAS/customer-management-backend
+    image: $REGISTRY/$REGISTRY_ALIAS/customer-management-backend:$IMAGE_TAG
   customer-management-frontend:
     build: ../customer-management-frontend
-    image: $REGISTRY/$REGISTRY_ALIAS/customer-management-frontend
+    image: $REGISTRY/$REGISTRY_ALIAS/customer-management-frontend:$IMAGE_TAG
   customer-self-service-backend:
     build: ../customer-self-service-backend
-    image: $REGISTRY/$REGISTRY_ALIAS/customer-self-service-backend
+    image: $REGISTRY/$REGISTRY_ALIAS/customer-self-service-backend:$IMAGE_TAG
   customer-self-service-frontend:
     build: ../customer-self-service-frontend
-    image: $REGISTRY/$REGISTRY_ALIAS/customer-self-service-frontend
+    image: $REGISTRY/$REGISTRY_ALIAS/customer-self-service-frontend:$IMAGE_TAG
   policy-management-backend:
     build: ../policy-management-backend
-    image: $REGISTRY/$REGISTRY_ALIAS/policy-management-backend
+    image: $REGISTRY/$REGISTRY_ALIAS/policy-management-backend:$IMAGE_TAG
   policy-management-frontend:
     build: ../policy-management-frontend
-    image: $REGISTRY/$REGISTRY_ALIAS/policy-management-frontend
+    image: $REGISTRY/$REGISTRY_ALIAS/policy-management-frontend:$IMAGE_TAG
   spring-boot-admin:
     build: ../spring-boot-admin
-    image: $REGISTRY/$REGISTRY_ALIAS/spring-boot-admin
+    image: $REGISTRY/$REGISTRY_ALIAS/spring-boot-admin:$IMAGE_TAG
   risk-management-server:
     build: ../risk-management-server
-    image: $REGISTRY/$REGISTRY_ALIAS/risk-management-server
+    image: $REGISTRY/$REGISTRY_ALIAS/risk-management-server:$IMAGE_TAG
