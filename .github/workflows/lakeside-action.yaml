@@ -157,7 +157,7 @@ jobs:
 
       - name: Run Manifest
         run: |
-          kubectl aply -f ./lakesidemutual/kubernetes/manifests/*.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/*.yaml
 
       # - name: "Create deployment"
       #   uses: okteto/apply@main
