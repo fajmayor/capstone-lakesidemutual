@@ -157,7 +157,7 @@ jobs:
           aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
 
       - name: Run Manifest
-      if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         run: |
           export REGISTRY=$REGISTRY
           export REGISTRY_ALIAS=$REGISTRY_ALIAS
