@@ -18,7 +18,7 @@ spec:
         - env:
             - name: VUE_APP_POLICY_MANAGEMENT_BACKEND
               value: http://18.221.202.2:8090
-          image: $REGISTRY/$REGISTRY_ALIAS/policy-management-frontend
+          image: fajmayor/policy-management-frontend
           imagePullPolicy: Always
           name: policy-management-frontend
           ports:

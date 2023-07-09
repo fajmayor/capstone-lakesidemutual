@@ -20,7 +20,7 @@ spec:
               value: policy-management-backend-queue
             - name: ACTIVEMQ_PORT
               value: "61613"
-          image: $REGISTRY/$REGISTRY_ALIAS/risk-management-server
+          image: fajmayor/risk-management-server
           imagePullPolicy: Always
           name: risk-management-server
           ports:

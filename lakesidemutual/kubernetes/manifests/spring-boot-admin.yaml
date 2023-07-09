@@ -15,7 +15,7 @@ spec:
         app: spring-boot-admin
     spec:
       containers:
-        - image: $REGISTRY/$REGISTRY_ALIAS/spring-boot-admin
+        - image: fajmayor/spring-boot-admin
           imagePullPolicy: Always
           name: spring-boot-admin
           ports:
