@@ -41,7 +41,7 @@ spec:
       port: 8090
       targetPort: 8090
   type: LoadBalancer
-  loadBalancerIP: 18.221.202.2
+  #loadBalancerIP: 18.221.202.2
 ---
 # Not sure why, but we need two distinct LoadBalancers for this to work:
 apiVersion: v1
@@ -59,4 +59,4 @@ spec:
       port: 61616
       targetPort: 61616
   type: LoadBalancer
-  loadBalancerIP: 18.221.202.2
+  #loadBalancerIP: 18.221.202.2
