@@ -17,7 +17,7 @@ spec:
       containers:
         - env:
             - name: VUE_APP_POLICY_MANAGEMENT_BACKEND
-              value: http://34.65.192.94:8090
+              value: http://18.221.202.2:8090
           image: $REGISTRY/$REGISTRY_ALIAS/policy-management-frontend
           imagePullPolicy: Always
           name: policy-management-frontend
@@ -37,4 +37,4 @@ spec:
       port: 3010
       targetPort: 80
   type: LoadBalancer
-  loadBalancerIP: 34.65.192.94
+  loadBalancerIP: 18.221.202.2
