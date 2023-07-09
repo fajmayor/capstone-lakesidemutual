@@ -22,7 +22,7 @@ spec:
               value: tcp://policy-management-backend:61616
             - name: SPRING_BOOT_ADMIN_CLIENT_URL
               value: http://spring-boot-admin:9000
-          image: $REGISTRY/$REGISTRY_ALIAS/customer-self-service-backend
+          image: fajmayor/customer-self-service-backend
           imagePullPolicy: Always
           name: customer-self-service-backend
           ports:

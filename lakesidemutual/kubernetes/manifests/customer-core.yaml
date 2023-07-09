@@ -18,7 +18,7 @@ spec:
         - env:
             - name: SPRING_BOOT_ADMIN_CLIENT_URL
               value: http://spring-boot-admin:9000
-          image: $REGISTRY/$REGISTRY_ALIAS/customer-core
+          image: fajmayor/customer-core
           imagePullPolicy: Always
           name: customer-core
           ports:

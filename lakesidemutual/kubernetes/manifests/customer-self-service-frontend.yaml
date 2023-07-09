@@ -22,7 +22,7 @@ spec:
               value: http://18.221.202.2:8080
             - name: REACT_APP_POLICY_MANAGEMENT_BACKEND
               value: http://18.221.202.2:8090
-          image: $REGISTRY/$REGISTRY_ALIAS/customer-self-service-frontend
+          image: fajmayor/customer-self-service-frontend
           imagePullPolicy: Always
           name: customer-self-service-frontend
           ports:
