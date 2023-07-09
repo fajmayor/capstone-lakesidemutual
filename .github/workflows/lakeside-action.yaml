@@ -78,7 +78,11 @@ jobs:
   
       - name: Verify EKS cluster
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        run: kubectl get nodes
+        run: |
+          kubectl get nodes
+          kubectl get pods
+          kubectl get deployments
+          kubectl get services
 
 
   # login to DockerHub
