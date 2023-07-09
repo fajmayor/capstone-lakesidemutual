@@ -80,6 +80,7 @@ jobs:
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         run: |
           kubectl get nodes
+
           kubectl get pods
           kubectl get deployments
           kubectl get services
@@ -163,9 +164,9 @@ jobs:
       - name: Run Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         run: |
-          export REGISTRY=$REGISTRY
-          export REGISTRY_ALIAS=$REGISTRY_ALIAS
-          export IMAGE_TAG=$IMAGE_TAG
+          export REGISTRY=${{ env.REGISTRY }}
+          export REGISTRY_ALIAS=${{ env.REGISTRY_ALIAS }}
+          export IMAGE_TAG=${{ env.IMAGE_TAG }}
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-core.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-backend.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-frontend.yaml
