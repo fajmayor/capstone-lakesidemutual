@@ -166,7 +166,7 @@ jobs:
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-backend.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-frontend.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-self-service-frontend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-seif-service-backend.yaml
+          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-self-service-backend.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/policy-management-frontend.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/policy-management-backend.yaml
           kubectl apply -f ./lakesidemutual/kubernetes/manifests/spring-boot-admin.yaml
