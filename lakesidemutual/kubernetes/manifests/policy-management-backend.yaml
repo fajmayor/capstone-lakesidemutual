@@ -41,7 +41,6 @@ spec:
       port: 8090
       targetPort: 8090
   type: LoadBalancer
-  loadBalancerIP: 3.129.127.236
 ---
 # Not sure why, but we need two distinct LoadBalancers for this to work:
 apiVersion: v1
