@@ -17,9 +17,9 @@ spec:
       containers:
         - env:
             - name: REACT_APP_CUSTOMER_SELF_SERVICE_BACKEND
-              value: http://customer-self-service-backend:8080
+              value: customer-self-service-backend
             - name: REACT_APP_CUSTOMER_MANAGEMENT_BACKEND
-              value: http://customer-management-backend:8100
+              value: customer-management-backend
           image: fajmayor/customer-management-frontend
           imagePullPolicy: Always
           name: customer-management-frontend

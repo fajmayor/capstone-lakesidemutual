@@ -40,7 +40,7 @@ spec:
     - name: "8090"
       port: 8090
       targetPort: 8090
-  type: LoadBalancer
+  type: NodePort
 ---
 # Not sure why, but we need two distinct LoadBalancers for this to work:
 apiVersion: v1

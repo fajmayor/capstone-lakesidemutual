@@ -17,7 +17,7 @@ spec:
       containers:
         - env:
             - name: SPRING_BOOT_ADMIN_CLIENT_URL
-              value: http://spring-boot-admin:9000
+              value: spring-boot-admin
           image: fajmayor/customer-core
           imagePullPolicy: Always
           name: customer-core

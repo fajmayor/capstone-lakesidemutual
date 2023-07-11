@@ -33,4 +33,3 @@ spec:
     - name: "9000"
       port: 9000
       targetPort: 9000
-  type: NodePort
