@@ -74,7 +74,7 @@ jobs:
       - name: Set kubeconfig
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         run: |
-          aws eks --region us-east-2 update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }}
+          aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
   
       - name: Verify EKS cluster
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}

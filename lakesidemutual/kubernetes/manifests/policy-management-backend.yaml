@@ -57,4 +57,4 @@ spec:
     - name: "61616"
       port: 61616
       targetPort: 61616
-  type: LoadBalancer
+  #type: LoadBalancer
