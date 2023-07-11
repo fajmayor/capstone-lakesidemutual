@@ -38,4 +38,4 @@ spec:
     - name: "50051"
       port: 50051
       targetPort: 50051
-  #type: LoadBalancer
+  type: NodePort
