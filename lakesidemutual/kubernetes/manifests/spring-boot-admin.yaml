@@ -34,4 +34,3 @@ spec:
       port: 9000
       targetPort: 9000
   type: LoadBalancer
-  loadBalancerIP: 3.129.127.236

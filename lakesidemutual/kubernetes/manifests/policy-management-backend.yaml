@@ -59,4 +59,3 @@ spec:
       port: 61616
       targetPort: 61616
   type: LoadBalancer
-  loadBalancerIP: 3.129.127.236
