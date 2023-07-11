@@ -17,7 +17,7 @@ spec:
       containers:
         - env:
             - name: VUE_APP_POLICY_MANAGEMENT_BACKEND
-              value: http://3.129.127.236:8090
+              value: http://policy-management-backend:8090
           image: fajmayor/policy-management-frontend
           imagePullPolicy: Always
           name: policy-management-frontend

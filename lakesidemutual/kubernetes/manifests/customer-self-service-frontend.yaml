@@ -17,11 +17,11 @@ spec:
       containers:
         - env:
             - name: REACT_APP_CUSTOMER_MANAGEMENT_BACKEND
-              value: http://3.129.127.236:8100
+              value: http://customer-management-backend:8100
             - name: REACT_APP_CUSTOMER_SELF_SERVICE_BACKEND
-              value: http://3.129.127.236:8080
+              value: http://customer-self-service-backend:8080
             - name: REACT_APP_POLICY_MANAGEMENT_BACKEND
-              value: http://3.129.127.236:8090
+              value: http://policy-management-backend:8090
           image: fajmayor/customer-self-service-frontend
           imagePullPolicy: Always
           name: customer-self-service-frontend
