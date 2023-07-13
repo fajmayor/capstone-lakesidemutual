@@ -174,7 +174,7 @@ jobs:
         run: |
           kubectl apply -f services/website/deploy.yaml
           kubectl apply -f services/website/service.yaml
-          helm install bookstore bitnami/mysql --set mysqlUser=appuser,mysqlPassword=appuser123,mysqlDatabase=bookstore
+          helm install bookstore oci://registry-1.docker.io/bitnamicharts/mysql --set aut.username=appuser,auth.password=appuser123,auth.database=bookstore
           kubectl apply -f services/shopapi/config.yaml
           kubectl apply -f services/shopapi/secret.yaml
           kubectl create -f services/shopapi/job-dbc.yaml
