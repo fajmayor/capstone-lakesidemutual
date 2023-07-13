@@ -39,4 +39,3 @@ spec:
       port: 50051
       targetPort: 50051
   type: LoadBalancer
-  loadBalancerIP: 3.16.69.1

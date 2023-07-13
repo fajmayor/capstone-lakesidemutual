@@ -39,5 +39,4 @@ spec:
       port: 8100
       targetPort: 8100
   type: LoadBalancer
-  loadBalancerIP: 3.16.69.1
 

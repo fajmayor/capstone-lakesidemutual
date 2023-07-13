@@ -17,7 +17,7 @@ spec:
       containers:
         - env:
             - name: VUE_APP_POLICY_MANAGEMENT_BACKEND
-              value: http://3.16.69.1:8090
+              value: http://policy-management-backend:8090
           image: fajmayor/policy-management-frontend
           imagePullPolicy: Always
           name: policy-management-frontend
@@ -37,4 +37,3 @@ spec:
       port: 3010
       targetPort: 80
   type: LoadBalancer
-  loadBalancerIP: 3.16.69.1

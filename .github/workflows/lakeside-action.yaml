@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: destroy
+    TERRAFORM_ACTION: apply
     GITHUB_USERNAME: ${{ vars.MY_GITHUB_USERNAME }}
     REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
     REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -158,21 +158,31 @@ jobs:
 
       - name: Set kubeconfig
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        id: update-kubeconfig
         run: |
           aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
 
+      - name: Install Helm
+        uses: mirzakhany/helm-install-action@v1
+        with:
+          k8s_config: ${{ steps.update-kubeconfig.outputs.kubeconfig }}
+
       - name: Run Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        working-directory: ./demo-apps-on-k8s
         run: |
-          export REGISTRY=${{ env.REGISTRY }}
-          export REGISTRY_ALIAS=${{ env.REGISTRY_ALIAS }}
-          export IMAGE_TAG=${{ env.IMAGE_TAG }}
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-core.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-backend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-management-frontend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-self-service-frontend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/customer-self-service-backend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/policy-management-frontend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/policy-management-backend.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/spring-boot-admin.yaml
-          kubectl apply -f ./lakesidemutual/kubernetes/manifests/risk-management-server.yaml
+          kubectl apply -f services/website/deploy.yaml
+          kubectl apply -f services/website/service.yaml
+          helm install bookstore stable/mysql --set mysqlUser=appuser,mysqlPassword=appuser123,mysqlDatabase=bookstore
+          kubectl apply -f services/shopapi/config.yaml
+          kubectl apply -f services/shopapi/secret.yaml
+          kubectl create -f services/shopapi/job-dbc.yaml
+          kubectl apply -f services/shopapi/deploy.yaml
+          kubectl apply -f services/shopapi/service.yaml
+          kubectl apply -f services/shopui/deploy.yaml
+          kubectl apply -f services/shopui/service.yaml
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/mandatory.yaml
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/provider/cloud-generic.yaml
+          kubectl apply -f route/ingress.yaml
+          LB_IP=$(kubectl get svc/ingress-nginx -n ingress-nginx | grep ingress | awk '{print $4}')
+          echo $LB_IP
