@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: destroy
+    TERRAFORM_ACTION: apply
     GITHUB_USERNAME: ${{ vars.MY_GITHUB_USERNAME }}
     REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
     REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -170,20 +170,12 @@ jobs:
 
       - name: Run Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./demo-apps-on-k8s
+        working-directory: ./project/infra/k8s
         run: |
-          kubectl apply -f services/website/deploy.yaml
-          kubectl apply -f services/website/service.yaml
-          helm install bookstore oci://registry-1.docker.io/bitnamicharts/mysql --set aut.username=appuser,auth.password=appuser123,auth.database=bookstore
-          kubectl apply -f services/shopapi/config.yaml
-          kubectl apply -f services/shopapi/secret.yaml
-          kubectl create -f services/shopapi/job-dbc.yaml
-          kubectl apply -f services/shopapi/deploy.yaml
-          kubectl apply -f services/shopapi/service.yaml
-          kubectl apply -f services/shopui/deploy.yaml
-          kubectl apply -f services/shopui/service.yaml
-          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/mandatory.yaml
-          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/provider/cloud-generic.yaml
-          kubectl apply -f route/ingress.yaml
-          LB_IP=$(kubectl get svc/ingress-nginx -n ingress-nginx | grep ingress | awk '{print $4}') 
-          echo $LB_IP
+          kubectl apply -f client-depl.yaml
+          kubectl apply -f comments-depl.yaml
+          kubectl apply -f event-bus-depl.yaml
+          kubectl apply -f moderation-depl.yaml
+          kubectl apply -f posts-depl.yaml
+          kubectl apply -f posts-srv.yaml
+          kubectl apply -f query-depl.yaml
