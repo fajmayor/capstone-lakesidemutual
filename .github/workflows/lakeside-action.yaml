@@ -162,10 +162,11 @@ jobs:
         run: |
           aws eks update-kubeconfig --name ${{ steps.tf-outputs.outputs.cluster_name }} --region us-east-2
 
-      - name: Install Helm
-        uses: mirzakhany/helm-install-action@v1
+      - uses: azure/setup-helm@v3
         with:
-          k8s_config: ${{ steps.update-kubeconfig.outputs.kubeconfig }}
+            version: 'latest' # default is latest (stable)
+            token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
+        id: install
 
       - name: Run Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
@@ -184,5 +185,5 @@ jobs:
           kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/mandatory.yaml
           kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/provider/cloud-generic.yaml
           kubectl apply -f route/ingress.yaml
-          LB_IP=$(kubectl get svc/ingress-nginx -n ingress-nginx | grep ingress | awk '{print $4}')
+          LB_IP=$(kubectl get svc/ingress-nginx -n ingress-nginx | grep ingress | awk '{print $4}') 
           echo $LB_IP
