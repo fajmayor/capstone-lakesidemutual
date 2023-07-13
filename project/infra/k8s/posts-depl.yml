@@ -19,12 +19,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: posts-srv
 spec:
+  type: LoadBalancer
   selector:
     app: posts
   ports:
-    - name: posts
+    - name: ports
       protocol: TCP
       port: 4000
       targetPort: 4000
+
