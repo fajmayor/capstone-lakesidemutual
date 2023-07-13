@@ -177,5 +177,4 @@ jobs:
           kubectl apply -f event-bus-depl.yaml
           kubectl apply -f moderation-depl.yaml
           kubectl apply -f posts-depl.yml
-          kubectl apply -f posts-srv.yaml
           kubectl apply -f query-depl.yaml
