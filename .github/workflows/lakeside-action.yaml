@@ -168,12 +168,14 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
         id: install
 
+      - name: Set up Skaffold
+        run: |
+          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+          chmod +x skaffold
+          sudo mv skaffold /usr/local/bin/
+
       - name: Run Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./project-template/infra/
+        working-directory: ./spring-micro
         run: |
-          kubectl apply -f backend.yaml
-          kubectl apply -f frontend.yaml
-          kubectl apply -f grafana.yaml
-          kubectl apply -f node-exporter.yaml
-          kubectl apply -f prometheus.yaml
+          skaffold run -f skaffold.yaml
