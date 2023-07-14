@@ -172,7 +172,6 @@ jobs:
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         working-directory: ./spring-micro/k8s
         run: |
-          kubectl apply -f ingress.yaml
           kubectl apply -f mongodb-configmap.yaml
           kubectl apply -f mongodb-deployment.yaml
           kubectl apply -f mongodb-secret.yaml
