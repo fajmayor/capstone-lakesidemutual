@@ -12,7 +12,7 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    TERRAFORM_ACTION: destroy
+    TERRAFORM_ACTION: apply
     GITHUB_USERNAME: ${{ vars.MY_GITHUB_USERNAME }}
     REPOSITORY_NAME: ${{ vars.REPOSITORY_NAME }}
     REGISTRY_ALIAS: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -172,41 +172,4 @@ jobs:
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
         working-directory: ./spring-micro/k8s
         run: |
-          kubectl apply -f mongodb-configmap.yaml
-          kubectl apply -f mongodb-deployment.yaml
-          kubectl apply -f mongodb-secret.yaml
-          kubectl apply -f privileges.yaml
-      
-      - name: Run admin-service Manifest
-        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./spring-micro/admin-service/k8s
-        run: |
-          kubectl apply -f configmap.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-
-      - name: Run department-service Manifest
-        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./spring-micro/department-service/k8s
-        run: |
-          kubectl apply -f configmap.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-          kubectl apply -f secret.yaml
-
-      - name: Run employee-service Manifest
-        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./spring-micro/employee-service/k8s
-        run: |
-          kubectl apply -f configmap.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
-          kubectl apply -f secret.yaml
-
-      - name: Run gateway-service Manifest
-        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./spring-micro/department-service/k8s
-        run: |
-          kubectl apply -f configmap.yaml
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+          kubectl apply -f k8s-manifest.yaml
