@@ -168,14 +168,46 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
         id: install
 
-      - name: Set up Skaffold
-        run: |
-          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-          chmod +x skaffold
-          sudo mv skaffold /usr/local/bin/
-
-      - name: Run Manifest
+      - name: Run infra Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./spring-micro
+        working-directory: ./spring-micro/k8s
         run: |
-          skaffold run -f skaffold.yaml
+          kubectl apply -f ingress.yaml
+          kubectl apply -f mongodb-configmap.yaml
+          kubectl apply -f mongodb-deployment.yaml
+          kubectl apply -f mongodb-secret.yaml
+          kubectl apply -f privileges.yaml
+      
+      - name: Run admin-service Manifest
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        working-directory: ./spring-micro/admin-server/k8s
+        run: |
+          kubectl apply -f configmap.yaml
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+
+      - name: Run department-service Manifest
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        working-directory: ./spring-micro/department-service/k8s
+        run: |
+          kubectl apply -f configmap.yaml
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl apply -f secret.yaml
+
+      - name: Run employee-service Manifest
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        working-directory: ./spring-micro/employee-service/k8s
+        run: |
+          kubectl apply -f configmap.yaml
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl apply -f secret.yaml
+
+      - name: Run gateway-service Manifest
+        if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
+        working-directory: ./spring-micro/department-service/k8s
+        run: |
+          kubectl apply -f configmap.yaml
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
