@@ -179,7 +179,7 @@ jobs:
       
       - name: Run admin-service Manifest
         if: ${{ steps.tf-outputs.outputs.cluster_name != '' }}
-        working-directory: ./spring-micro/admin-server/k8s
+        working-directory: ./spring-micro/admin-service/k8s
         run: |
           kubectl apply -f configmap.yaml
           kubectl apply -f deployment.yaml
