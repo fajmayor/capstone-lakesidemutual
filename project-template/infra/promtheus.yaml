@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest
+          volumeMounts:
+            - name: prometheus-data
+              mountPath: /prometheus
+            - name: prometheus-config
+              mountPath: /etc/prometheus/prometheus.yml
+              subPath: prometheus.yml
+            - name: prometheus-alert-rules
+              mountPath: /etc/prometheus/alert.rules
+              subPath: alert.rules
+          command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+      volumes:
+        - name: prometheus-data
+          emptyDir: {}
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+            items:
+              - key: prometheus.yml
+                path: prometheus.yml
+        - name: prometheus-alert-rules
+          configMap:
+            name: prometheus-config
+            items:
+              - key: alert.rules
+                path: alert.rules
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    # Paste the contents of prometheus.yml here 
+    global:
+        scrape_interval: 5s
+        external_labels:
+            monitor: 'my-monitor'
+    scrape_configs:
+        - job_name: 'prometheus'
+          static_configs:
+              - targets: ['localhost:9090']
+        - job_name: 'node-resources'
+          scrape_interval: 10s
+          static_configs:
+              - targets: ['node-exporter:9100']
+        - job_name: 'backend-resources'
+          scrape_interval: 10s
+          static_configs:
+              - targets: ['backend:5000']
+    rule_files:
+      - 'alert.rules'
+  alert.rules: |
+    # Paste the contents of alert.rules here
+    groups:
+    - name: node-alert
+      rules:
+      - alert: service_down
+        expr: up == 0
+        for: 2m
+      - alert: high_load
+        expr: node_load1 > 0.5
+        for: 5m
